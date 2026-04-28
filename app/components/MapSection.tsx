@@ -16,11 +16,13 @@ export default function MapSection() {
           <ScrollReveal direction="left">
             <div className="rounded-xl overflow-hidden glass hover:border-cyan-500/30 transition-all group">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0848340495804!2d106.71294397451756!3d10.80481445867053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175290015fa2487%3A0x9dc3e7ebce94d8e8!2sJoy%20Station!5e0!3m2!1svi!2s!4v1777365527014!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.509992233818!2d106.68829711478638!3d10.77223239231945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f2111581811%3A0x1e61a63d53ef206e!2sHo%20Chi%20Minh%20City!5e0!3m2!1sen!2s!4v1609459200000"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
                 loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
                 className="w-full grayscale group-hover:grayscale-0 transition-all duration-500"
               />
             </div>
