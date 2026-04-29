@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { foods } from "./data";
 import ScrollReveal from "./ScrollReveal";
+import Link from "next/link";
 
 export default function Food() {
   return (
@@ -51,12 +52,14 @@ export default function Food() {
 
         <ScrollReveal delay={400}>
           <div className="mt-12 text-center">
-            <button className="group px-6 py-3 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-medium rounded-lg transition-all inline-flex items-center gap-2">
-              XEM MENU ĐẦY ĐỦ 
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
+            <Link rel="Food menu" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThoazGkPIH9kasfLWUZ4GdC-a2sJpZTjs7mQ&s">
+              <button className="group px-6 py-3 border border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-medium rounded-lg transition-all inline-flex items-center gap-2">
+                XEM MENU ĐẦY ĐỦ 
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </Link>
           </div>
         </ScrollReveal>
       </div>

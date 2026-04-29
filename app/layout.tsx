@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Game Center - Gaming Service",
+  title: "Joy Station - Gaming Service",
   description: "Trải nghiệm chơi game đỉnh cao với thiết bị hiện đại. Đặt combo, khám phá games hot và tham gia giải đấu!",
 };
 

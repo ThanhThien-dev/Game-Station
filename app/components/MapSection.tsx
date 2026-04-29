@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { location } from "./data";
 import ScrollReveal from "./ScrollReveal";
 
@@ -9,14 +10,14 @@ export default function MapSection() {
           <h2 className="text-3xl md:text-4xl font-black mb-4">
             <span className="text-cyan-400 neon-text">TÌM</span> CHÚNG TÔI
           </h2>
-          <p className="text-zinc-400">Ghé thăm Gaming Center ngay hôm nay</p>
+          <p className="text-zinc-400">Ghé thăm Joy Station ngay hôm nay</p>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <ScrollReveal direction="left">
             <div className="rounded-xl overflow-hidden glass hover:border-cyan-500/30 transition-all group">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.509992233818!2d106.68829711478638!3d10.77223239231945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f2111581811%3A0x1e61a63d53ef206e!2sHo%20Chi%20Minh%20City!5e0!3m2!1sen!2s!4v1609459200000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0848340495804!2d106.71294397451756!3d10.804814458670528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175290015fa2487%3A0x9dc3e7ebce94d8e8!2sJoy%20Station!5e0!3m2!1svi!2s!4v1777455790094!5m2!1svi!2s"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
@@ -67,15 +68,17 @@ export default function MapSection() {
                 </div>
               </div>
 
-              <button className="group w-full py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-xl transition-all hover:scale-[1.02]">
-                <span className="inline-flex items-center gap-2">
-                  CHỈ ĐƯỜNG NGAY
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </span>
-              </button>
+              <Link rel="Map" href="https://www.google.com/maps/place/Joy+Station/@10.8048145,106.712944,17z/data=!3m1!4b1!4m6!3m5!1s0x3175290015fa2487:0x9dc3e7ebce94d8e8!8m2!3d10.8048092!4d106.7155189!16s%2Fg%2F11yg00fvbw!5m2!1e4!1e1?entry=ttu&g_ep=EgoyMDI2MDQyNi4wIKXMDSoASAFQAw%3D%3D">
+                <button className="group w-full py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-xl transition-all hover:scale-[1.02]">
+                  <span className="inline-flex items-center gap-2">
+                    CHỈ ĐƯỜNG NGAY
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </span>
+                </button>
+              </Link>
             </div>
           </ScrollReveal>
         </div>

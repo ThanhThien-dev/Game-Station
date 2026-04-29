@@ -8,8 +8,8 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-4 mb-4">
             <span className="text-xl">🎮</span>
             <span className="text-lg font-black">
-              <span className="text-white">GAME</span>
-              <span className="text-cyan-400">CENTER</span>
+              <span className="text-white">JOY</span>
+              <span className="text-cyan-400">STATION</span>
             </span>
           </div>
           

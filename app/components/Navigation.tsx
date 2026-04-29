@@ -33,8 +33,8 @@ export default function Navigation() {
           <a href="#" className="flex items-center gap-2 group">
             <span className="text-2xl group-hover:rotate-12 transition-transform duration-300">🎮</span>
             <span className="text-xl font-black group-hover:scale-105 transition-transform">
-              <span className="text-white">GAME</span>
-              <span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">CENTER</span>
+              <span className="text-white">JOY</span>
+              <span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">STATION</span>
             </span>
           </a>
 

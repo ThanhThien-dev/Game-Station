@@ -54,7 +54,7 @@ export default function Chatbot() {
         }
       } else if (step === "confirm") {
         if (input.toLowerCase().includes("đồng ý") || input.toLowerCase().includes("ok") || input.toLowerCase().includes("yes")) {
-          response = `✅ Đặt chỗ thành công!\n\n📋 Thông tin đơn:\n- Combo: ${selectedCombo?.name}\n- Số người: ${people}\n- Tổng tiền: ${selectedCombo?.price.toLocaleString()}₫\n\nCảm ơn bạn! Hẹn gặp tại Gaming Center nhé! 🎮`;
+          response = `✅ Đặt chỗ thành công!\n\n📋 Thông tin đơn:\n- Combo: ${selectedCombo?.name}\n- Số người: ${people}\n- Tổng tiền: ${selectedCombo?.price.toLocaleString()}₫\n\nCảm ơn bạn! Hẹn gặp tại Joy Station nhé! 🎮`;
           setStep("idle");
           setPeople(0);
           setSelectedCombo(null);

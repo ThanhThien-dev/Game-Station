@@ -35,13 +35,13 @@ export default function Hero() {
       <div className="relative z-10 text-center px-4 max-w-4xl">
         <div className="animate-on-load opacity-0 translate-y-10 transition-all duration-700 ease-out mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-cyan-400">
           <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-          OPEN 10:00 - 24:00
+          OPEN 09:00 - 23:00
         </div>
 
         <h1 className="animate-on-load opacity-0 translate-y-10 transition-all duration-700 ease-out text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight">
-          <span className="text-white neon-text inline-block">GAME</span>
+          <span className="text-white neon-text inline-block">JOY</span>
           <br className="md:hidden" />
-          <span className="text-cyan-400 neon-text inline-block"> CENTER</span>
+          <span className="text-cyan-400 neon-text inline-block"> STATION</span>
         </h1>
 
         <p className="animate-on-load opacity-0 translate-y-10 transition-all duration-700 ease-out text-xl md:text-2xl text-zinc-400 mb-8 max-w-2xl mx-auto">
