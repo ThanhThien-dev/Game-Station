@@ -10,9 +10,9 @@ const comboPrices: Record<number, number> = {
 };
 
 const comboNames: Record<number, string> = {
-  1: "Nintendo Switch",
-  2: "Xbox 360",
-  3: "PlayStation PS4",
+  1: "Combo 1",
+  2: "Combo 2",
+  3: "Combo 3",
 };
 
 export async function POST(request: Request) {

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { combos } from "./data";
 import { vouchers, applyVoucher } from "@/lib/vouchers";
+import { earnPoints, getPoints, pointsToDiscount, redeemPoints } from "@/lib/loyalty";
 import PaymentModal from "./PaymentModal";
 
 const timeSlots = [
@@ -25,15 +26,38 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
     voucherCode: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [bookingResult, setBookingResult] = useState<{ id: string; totalPrice: number; paid: boolean } | null>(null);
+  const [bookingResult, setBookingResult] = useState<{ id: string; totalPrice: number; paid: boolean; pointsUsed: number } | null>(null);
   const [showPayment, setShowPayment] = useState(false);
   const [voucherApplied, setVoucherApplied] = useState<{ code: string; discount: number; finalPrice: number } | null>(null);
   const [voucherError, setVoucherError] = useState("");
   const [showVoucherList, setShowVoucherList] = useState(false);
+  const [userPoints, setUserPoints] = useState(0);
+  const [usePoints, setUsePoints] = useState(false);
+  const [pointsDiscount, setPointsDiscount] = useState(0);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("joy-user");
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      const lp = getPoints(user.id);
+      setUserPoints(lp.points);
+    }
+  }, []);
 
   const selectedCombo = combos.find((c) => c.id === Number(formData.comboId));
   const originalPrice = selectedCombo ? selectedCombo.price : 0;
-  const finalPrice = voucherApplied ? voucherApplied.finalPrice : originalPrice;
+  const voucherFinalPrice = voucherApplied ? voucherApplied.finalPrice : originalPrice;
+  const finalPrice = usePoints ? Math.max(0, voucherFinalPrice - pointsDiscount) : voucherFinalPrice;
+
+  const handleTogglePoints = () => {
+    if (!usePoints) {
+      const discount = pointsToDiscount(userPoints);
+      setPointsDiscount(Math.min(discount, voucherFinalPrice));
+    } else {
+      setPointsDiscount(0);
+    }
+    setUsePoints(!usePoints);
+  };
 
   const handleApplyVoucher = () => {
     setVoucherError("");
@@ -60,7 +84,7 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
       });
       const data = await res.json();
       if (data.success) {
-        const comboNames: Record<number, string> = { 1: "Nintendo Switch", 2: "Xbox 360", 3: "PlayStation PS4" };
+        const comboNames: Record<number, string> = { 1: "Combo 1", 2: "Combo 2", 3: "Combo 3" };
         const bookingData = {
           id: data.bookingId,
           comboName: comboNames[Number(formData.comboId)] || "Unknown",
@@ -78,8 +102,37 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
         const bookings = JSON.parse(savedBookings);
         bookings.unshift(bookingData);
         localStorage.setItem("joy-bookings", JSON.stringify(bookings));
-        setBookingResult({ id: data.bookingId, totalPrice: finalPrice, paid: false });
+        setBookingResult({ id: data.bookingId, totalPrice: finalPrice, paid: false, pointsUsed: usePoints ? pointsToDiscount(userPoints) : 0 });
         setStep(4);
+
+        // Add notification
+        const notifications = JSON.parse(localStorage.getItem("joy-notifications") || "[]");
+        notifications.unshift({
+          id: `notif-${Date.now()}`,
+          message: `Đặt lịch thành công! Mã: ${data.bookingId} - ${selectedCombo?.name}`,
+          type: "booking" as const,
+          read: false,
+          createdAt: new Date().toISOString(),
+        });
+        localStorage.setItem("joy-notifications", JSON.stringify(notifications));
+
+        // Send email notification (demo)
+        if (formData.guestEmail) {
+          fetch("/api/notify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "booking-confirmation",
+              to: formData.guestPhone,
+              bookingId: data.bookingId,
+              comboName: selectedCombo?.name,
+              date: formData.bookingDate,
+              time: formData.bookingTime,
+              amount: finalPrice,
+              guestName: formData.guestName,
+            }),
+          }).catch(() => {});
+        }
 
         if (!payAtCounter) {
           setShowPayment(true);
@@ -88,7 +141,7 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
         alert(data.error || "Đặt lịch thất bại!");
       }
     } catch {
-      setBookingResult({ id: "BOOK-" + Date.now(), totalPrice: finalPrice, paid: false });
+      setBookingResult({ id: "BOOK-" + Date.now(), totalPrice: finalPrice, paid: false, pointsUsed: usePoints ? pointsToDiscount(userPoints) : 0 });
       setStep(4);
     } finally {
       setIsSubmitting(false);
@@ -351,14 +404,53 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
                   )}
                 </div>
 
+                {/* Loyalty Points section */}
+                {userPoints > 0 && (
+                  <div className="border-t border-zinc-700 pt-3">
+                    <button
+                      onClick={handleTogglePoints}
+                      className={`w-full flex items-center justify-between p-3 rounded-lg border transition-all ${
+                        usePoints
+                          ? "border-purple-500 bg-purple-500/10"
+                          : "border-zinc-700 bg-zinc-800 hover:border-zinc-600"
+                      }`}
+                    >
+                      <div className="text-left">
+                        <div className="text-sm font-medium text-white">💎 Dùng điểm thưởng</div>
+                        <div className="text-xs text-zinc-400">Bạn có {userPoints} điểm</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-green-400 text-sm font-bold">-{pointsToDiscount(userPoints).toLocaleString()}₫</div>
+                        <div className={`w-10 h-5 rounded-full relative transition-colors ${usePoints ? "bg-purple-500" : "bg-zinc-600"}`}>
+                          <div className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all ${usePoints ? "left-5" : "left-0.5"}`} />
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                )}
+
                 {/* Total */}
-                <div className="border-t border-zinc-700 pt-3 flex justify-between font-bold">
-                  <span className="text-zinc-300">💰 Tổng tiền</span>
-                  <div className="text-right">
-                    {voucherApplied && (
-                      <div className="text-xs text-zinc-500 line-through">{originalPrice.toLocaleString()}₫</div>
-                    )}
-                    <span className="text-cyan-400 text-lg">{finalPrice.toLocaleString()}₫</span>
+                <div className="border-t border-zinc-700 pt-3 space-y-1">
+                  {voucherApplied && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-zinc-400">Voucher</span>
+                      <span className="text-green-400">-{voucherApplied.discount.toLocaleString()}₫</span>
+                    </div>
+                  )}
+                  {usePoints && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-zinc-400">Điểm thưởng</span>
+                      <span className="text-purple-400">-{pointsDiscount.toLocaleString()}₫</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between font-bold">
+                    <span className="text-zinc-300">💰 Tổng tiền</span>
+                    <div className="text-right">
+                      {(voucherApplied || usePoints) && (
+                        <div className="text-xs text-zinc-500 line-through">{originalPrice.toLocaleString()}₫</div>
+                      )}
+                      <span className="text-cyan-400 text-lg">{finalPrice.toLocaleString()}₫</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -458,6 +550,51 @@ export default function BookingForm({ isOpen, onClose }: { isOpen: boolean; onCl
               b.id === bookingResult.id ? { ...b, status: "confirmed", paid: true } : b
             );
             localStorage.setItem("joy-bookings", JSON.stringify(updated));
+
+            // Redeem points if used
+            if (bookingResult.pointsUsed > 0) {
+              const savedUser = localStorage.getItem("joy-user");
+              if (savedUser) {
+                const user = JSON.parse(savedUser);
+                const pointsNeeded = bookingResult.pointsUsed / 1000 * 100;
+                redeemPoints(user.id, pointsNeeded);
+                const updatedLoyalty = getPoints(user.id);
+                user.points = updatedLoyalty.points;
+                localStorage.setItem("joy-user", JSON.stringify(user));
+              }
+            }
+
+            // Award loyalty points on net amount
+            const savedUser = localStorage.getItem("joy-user");
+            if (savedUser) {
+              const user = JSON.parse(savedUser);
+              const netAmount = finalPrice;
+              const loyaltyData = earnPoints(user.id, netAmount, bookingResult.id);
+              const points = Math.floor(netAmount / 10_000) * 10;
+
+              const notifications = JSON.parse(localStorage.getItem("joy-notifications") || "[]");
+              notifications.unshift({
+                id: `notif-pay-${Date.now()}`,
+                message: `Thanh toán thành công ${finalPrice.toLocaleString()}₫ cho đơn ${bookingResult.id}. +${points} điểm thưởng!`,
+                type: "payment" as const,
+                read: false,
+                createdAt: new Date().toISOString(),
+              });
+              localStorage.setItem("joy-notifications", JSON.stringify(notifications));
+
+              user.points = loyaltyData.points;
+              localStorage.setItem("joy-user", JSON.stringify(user));
+            } else {
+              const notifications = JSON.parse(localStorage.getItem("joy-notifications") || "[]");
+              notifications.unshift({
+                id: `notif-pay-${Date.now()}`,
+                message: `Thanh toán thành công ${finalPrice.toLocaleString()}₫ cho đơn ${bookingResult.id}`,
+                type: "payment" as const,
+                read: false,
+                createdAt: new Date().toISOString(),
+              });
+              localStorage.setItem("joy-notifications", JSON.stringify(notifications));
+            }
           }}
         />
       )}

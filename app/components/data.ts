@@ -40,30 +40,30 @@ export const games = [
 export const combos = [
   {
     id: 1,
-    name: "Nintendo Switch",
+    name: "Combo 1",
     items: ["Chơi 2 tặng 1", "Snack Combo", "Bốc thăm trúng quà"],
     originalPrice: 180000,
     price: 129000,
     popular: true,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+    image: "/images/combo.jpg",
   },
   {
     id: 2,
-    name: "Xbox 360",
+    name: "Combo 2",
     items: ["Chơi 2h tặng giờ đầu", "Oder 39k trở lên", "16H - 23H", "Gift"],
     originalPrice: 320000,
     price: 249000,
     popular: false,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+    image: "/images/combo.jpg",
   },
   {
     id: 3,
-    name: "Playstation PS4",
+    name: "Combo 3",
     items: ["Free Boardgame", "Free 30p cho nhóm 3", "Free 3 lượt gắp gấu", "Blind Box"],
     originalPrice: 550000,
     price: 399000,
     popular: false,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
+    image: "/images/combo.jpg",
   },
 ];
 
