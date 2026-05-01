@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { games } from "./data";
 import ScrollReveal from "./ScrollReveal";
+import Link from "next/link";
 
 export default function GameList() {
   return (
@@ -20,39 +21,44 @@ export default function GameList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {games.map((game, idx) => (
             <ScrollReveal key={game.id} direction="up" delay={idx * 100}>
-              <div className="group relative rounded-xl overflow-hidden glass hover:border-cyan-500/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={game.image}
-                    alt={game.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 right-3 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-xs font-medium text-cyan-400">
-                    {game.category}
-                  </div>
-                  {/* Play overlay */}
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-14 h-14 rounded-full bg-cyan-500 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
+                <div className="group relative rounded-xl overflow-hidden glass hover:border-cyan-500/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                  {/* Glow effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={game.image}
+                      alt={game.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 right-3 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full text-xs font-medium text-cyan-400">
+                      {game.category}
                     </div>
+                    {/* Play overlay */}
+              <Link href={game.link}>
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-14 h-14 rounded-full bg-cyan-500 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
+                      </div>
+                    </div>
+                    </Link>
+
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{game.name}</h3>
+                    <div className="flex items-center justify-between">
+                      <span className="text-zinc-400 text-sm">👥 {game.players} players</span>
+                    </div>
+              <Link href={game.link}>
+                    <button className="w-full mt-4 py-2 bg-zinc-800 hover:bg-cyan-600 text-white text-sm font-medium rounded-lg transition-all transform group-hover:translate-y-0 translate-y-1 opacity-80 group-hover:opacity-100">
+                      Xem demo
+                    </button>
+              </Link>
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{game.name}</h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-zinc-400 text-sm">👥 {game.players} players</span>
-                  </div>
-                  <button className="w-full mt-4 py-2 bg-zinc-800 hover:bg-cyan-600 text-white text-sm font-medium rounded-lg transition-all transform group-hover:translate-y-0 translate-y-1 opacity-80 group-hover:opacity-100">
-                    ĐẶT NGAY
-                  </button>
-                </div>
-              </div>
             </ScrollReveal>
           ))}
         </div>

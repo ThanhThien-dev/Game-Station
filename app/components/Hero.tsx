@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function Hero({ onComboClick }: { onComboClick: () => void }) {
+export default function Hero({ onComboClick, onBookClick }: { onComboClick: () => void; onBookClick: () => void }) {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,8 +50,8 @@ export default function Hero({ onComboClick }: { onComboClick: () => void }) {
         </p>
 
         <div className="animate-on-load opacity-0 translate-y-10 transition-all duration-700 ease-out flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="group relative px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50">
-            <a href="#combo"><span className="relative z-10">ĐẶT LỊCH NGAY</span></a>
+          <button onClick={onBookClick} className="group relative px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50">
+            <span className="relative z-10">ĐẶT LỊCH NGAY</span>
             <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
           </button>
           <button onClick={onComboClick} className="group px-8 py-4 border border-zinc-700 hover:border-cyan-500 text-white font-medium rounded-lg transition-all hover:bg-cyan-500/10">

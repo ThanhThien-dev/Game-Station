@@ -6,6 +6,7 @@ export const games = [
     players: "2",
     category: "Co-op",
     price: 70000,
+    link: "https://www.youtube.com/watch?v=cITdMfwJnQs"
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const games = [
     players: "2-4",
     category: "Party",
     price: 55000,
+    link: "https://www.youtube.com/watch?v=UtBEOXg1pDQ"
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const games = [
     players: "2-4",
     category: "Simulation",
     price: 60000,
+    link: "https://www.youtube.com/shorts/fCqzFopx9es"
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const games = [
     players: "1-4",
     category: "Fighting",
     price: 50000,
+    link: "https://www.youtube.com/shorts/Hs3bkUuUoP0"
   },
 ];
 

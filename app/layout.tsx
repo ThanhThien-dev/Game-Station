@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/lib/auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Joy Station - Gaming Service",
+  title: "Joy Station - Gaming Center",
   description: "Trải nghiệm chơi game đỉnh cao với thiết bị hiện đại. Đặt combo, khám phá games hot và tham gia giải đấu!",
 };
 
@@ -25,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

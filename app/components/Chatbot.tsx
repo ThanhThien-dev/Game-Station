@@ -12,7 +12,7 @@ interface Message {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, role: "assistant", content: "Chào bạn! 🎮 Tôi là AI Gaming Assistant. Bạn cần tư vấn gì hôm nay?" },
+    { id: 1, role: "assistant", content: "Chào bạn! 🎮 Tôi là AI Assistant của nhà Joy Station. Bạn cần tư vấn gì hôm nay?" },
   ]);
   const [input, setInput] = useState("");
   const [step, setStep] = useState<"idle" | "people" | "combo" | "price" | "confirm">("idle");
@@ -94,7 +94,7 @@ export default function Chatbot() {
                 <span className="text-xl">🤖</span>
               </div>
               <div>
-                <h3 className="font-bold text-white">AI Gaming Assistant</h3>
+                <h3 className="font-bold text-white">AI Joy Assistant</h3>
                 <p className="text-xs text-white/80">Always online</p>
               </div>
             </div>

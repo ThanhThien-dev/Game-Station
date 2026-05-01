@@ -2,7 +2,7 @@ import Image from "next/image";
 import { combos } from "./data";
 import ScrollReveal from "./ScrollReveal";
 
-export default function Combo() {
+export default function Combo({ onBookClick }: { onBookClick: () => void }) {
   return (
     <section className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 gradient-bg" />
@@ -78,7 +78,7 @@ export default function Combo() {
                     </div>
                   </div>
 
-                  <button className={`w-full py-3 font-bold rounded-lg transition-all transform hover:scale-[1.02] ${
+                  <button onClick={onBookClick} className={`w-full py-3 font-bold rounded-lg transition-all transform hover:scale-[1.02] ${
                     combo.popular
                       ? "bg-gradient-to-r from-pink-500 to-cyan-500 text-white hover:opacity-90 hover:shadow-lg hover:shadow-pink-500/30"
                       : "bg-zinc-800 hover:bg-pink-600 text-white"

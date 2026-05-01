@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 import Hero from "./components/Hero";
 import GameList from "./components/GameList";
 import Combo from "./components/Combo";
@@ -12,16 +13,34 @@ import Chatbot from "./components/Chatbot";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ComboLightbox from "./components/ComboLightbox";
+import BookingForm from "./components/BookingForm";
+import AuthModal from "./components/AuthModal";
 
 export default function Home() {
+  const { user } = useAuth();
   const [showComboLightbox, setShowComboLightbox] = useState(false);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+
+  const handleBook = () => {
+    if (user) {
+      setShowBookingForm(true);
+    } else {
+      setShowAuth(true);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setShowAuth(false);
+    setShowBookingForm(true);
+  };
 
   return (
     <main className="min-h-screen bg-zinc-950">
-      <Navigation />
-      <Hero onComboClick={() => setShowComboLightbox(true)} />
+      <Navigation onBookClick={handleBook} />
+      <Hero onComboClick={() => setShowComboLightbox(true)} onBookClick={handleBook} />
       <div id="games"><GameList /></div>
-      <div id="combo"><Combo /></div>
+      <div id="combo"><Combo onBookClick={handleBook} /></div>
       <div id="promo"><Promotion /></div>
       <div id="food"><Food /></div>
       <Review />
@@ -29,6 +48,8 @@ export default function Home() {
       <Footer />
       <Chatbot />
       <ComboLightbox isOpen={showComboLightbox} onClose={() => setShowComboLightbox(false)} />
+      <BookingForm isOpen={showBookingForm} onClose={() => setShowBookingForm(false)} />
+      <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} onLoginSuccess={handleAuthSuccess} />
     </main>
   );
 }

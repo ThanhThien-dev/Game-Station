@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@/lib/auth-context";
 
-export default function Navigation() {
+export default function Navigation({ onBookClick }: { onBookClick: () => void }) {
+  const { user, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,11 +55,31 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a href="#combo">
-              <button className="hidden md:block px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
-                Đặt ngay
+            <button onClick={onBookClick} className="hidden md:block px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
+              Đặt ngay
+            </button>
+
+            {user ? (
+              <div className="relative">
+                <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors">
+                  <div className="w-8 h-8 bg-cyan-500/20 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-bold text-cyan-400">{user.name.charAt(0).toUpperCase()}</span>
+                  </div>
+                </button>
+                {showUserMenu && (
+                  <div className="absolute right-0 top-12 w-48 bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden shadow-xl z-50">
+                    <a href="/profile" className="block px-4 py-3 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-cyan-400">👤 Hồ sơ của tôi</a>
+                    <a href="/bookings" className="block px-4 py-3 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-cyan-400">📋 Lịch sử đặt</a>
+                    <button onClick={() => { logout(); setShowUserMenu(false); }} className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-zinc-800">🚪 Đăng xuất</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button onClick={() => onBookClick()} className="hidden md:flex items-center gap-2 px-4 py-2 border border-zinc-700 hover:border-cyan-500 text-white text-sm font-medium rounded-lg transition-all">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                Đăng nhập
               </button>
-            </a>
+            )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-cyan-400 transition-colors"
@@ -75,7 +98,7 @@ export default function Navigation() {
         {/* Mobile menu */}
         <div 
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isMenuOpen ? "max-h-80 opacity-100 mt-4" : "max-h-0 opacity-0"
+            isMenuOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
         >
           <div className="py-4 border-t border-zinc-800 flex flex-col gap-4">
@@ -88,9 +111,21 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <button className="px-4 py-2 bg-cyan-500 text-black font-medium rounded-lg">
+            <button onClick={onBookClick} className="px-4 py-2 bg-cyan-500 text-black font-medium rounded-lg">
               Đặt ngay
             </button>
+            {user ? (
+              <div className="border-t border-zinc-700 pt-4 space-y-2">
+                <div className="text-white text-sm">Xin chào, <span className="font-bold">{user.name}</span></div>
+                <a href="/profile" className="block text-zinc-300 hover:text-cyan-400 text-sm">👤 Hồ sơ</a>
+                <a href="/bookings" className="block text-zinc-300 hover:text-cyan-400 text-sm">📋 Lịch sử đặt</a>
+                <button onClick={logout} className="text-red-400 text-sm">🚪 Đăng xuất</button>
+              </div>
+            ) : (
+              <button onClick={() => onBookClick()} className="px-4 py-2 border border-zinc-700 text-white text-sm font-medium rounded-lg">
+                Đăng nhập / Đăng ký
+              </button>
+            )}
           </div>
         </div>
       </div>
