@@ -2,7 +2,7 @@ export const games = [
   {
     id: 1,
     name: "It Takes Two",
-    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+    image: "/images/It takes two.jpg",
     players: "2",
     category: "Co-op",
     price: 70000,
@@ -10,7 +10,7 @@ export const games = [
   {
     id: 2,
     name: "Rabbids Party of Legends",
-    image: "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400&h=300&fit=crop",
+    image: "/images/Rabbids party of legends.jpg",
     players: "2-4",
     category: "Party",
     price: 55000,
@@ -18,7 +18,7 @@ export const games = [
   {
     id: 3,
     name: "Overcooked",
-    image: "https://images.unsplash.com/photo-1556910103-1c0270c6a2e9?w=400&h=300&fit=crop",
+    image: "/images/Overcooked.jpg",
     players: "2-4",
     category: "Simulation",
     price: 60000,
@@ -26,7 +26,7 @@ export const games = [
   {
     id: 4,
     name: "Boomerang Fu",
-    image: "https://images.unsplash.com/photo-1542751110-97427bbecf50?w=400&h=300&fit=crop",
+    image: "/images/Boomerang fu.jpg",
     players: "1-4",
     category: "Fighting",
     price: 50000,

@@ -47,10 +47,9 @@ export default function GameList() {
                   <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{game.name}</h3>
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-400 text-sm">👥 {game.players} players</span>
-                    <span className="text-cyan-400 font-bold">{game.price.toLocaleString()}₫</span>
                   </div>
                   <button className="w-full mt-4 py-2 bg-zinc-800 hover:bg-cyan-600 text-white text-sm font-medium rounded-lg transition-all transform group-hover:translate-y-0 translate-y-1 opacity-80 group-hover:opacity-100">
-                    CHƠI NGAY
+                    ĐẶT NGAY
                   </button>
                 </div>
               </div>

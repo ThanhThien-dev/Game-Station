@@ -52,9 +52,11 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden md:block px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
-              Đặt ngay
-            </button>
+            <a href="#combo">
+              <button className="hidden md:block px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30">
+                Đặt ngay
+              </button>
+            </a>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden w-10 h-10 flex items-center justify-center text-white hover:text-cyan-400 transition-colors"
