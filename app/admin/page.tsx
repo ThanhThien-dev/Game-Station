@@ -221,6 +221,7 @@ export default function AdminPage() {
             <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} placeholder="Mật khẩu admin" className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none" />
             <button type="submit" className="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg">Đăng nhập</button>
           </form>
+          <p className="text-zinc-400 text-sm mt-3 text-center">Dev version password: admin123</p>
           <button onClick={() => router.push("/")} className="w-full mt-4 text-sm text-zinc-500 hover:text-zinc-300">← Quay lại trang chủ</button>
         </div>
       </main>
